@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LoginMaui.Views.Dashboard.UserDetails"
+            Title="User Details">
+
+	<ScrollView>
+		<StackLayout>
+			<Label Text="User Details" FontSize="Large" HorizontalOptions="Center" />
+			<Grid Padding="10">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+
+				<Grid Grid.Row="0" BackgroundColor="LightGray" Opacity="0.4" Padding="10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Label Text="Username" Grid.Column="0" FontSize="Medium" FontAttributes="Bold" />
+					<Label Text="Email" Grid.Column="1" FontSize="Medium" FontAttributes="Bold" />
+					<Label Text="Date of Birth" Grid.Column="2" FontSize="Medium" FontAttributes="Bold" />
+					<Label Text="Address" Grid.Column="3" FontSize="Medium" FontAttributes="Bold" />
+				</Grid>
+
+				<ListView x:Name="usersListView" Grid.Row="1">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<Grid Padding="10">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="*" />
+									</Grid.ColumnDefinitions>
+									<Label Text="{Binding Username}" Grid.Column="0" />
+									<Label Text="{Binding Email}" Grid.Column="1" />
+									<Label Text="{Binding DOB, StringFormat='{0:MM/dd/yyyy}'}" Grid.Column="2" />
+									<Label Text="{Binding Address}" Grid.Column="3" />
+								</Grid>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</Grid>
+		</StackLayout>
+	</ScrollView>
+</ContentPage>
