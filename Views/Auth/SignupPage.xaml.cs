@@ -9,11 +9,14 @@ namespace LoginMaui.Views.Auth
 {
 	public partial class SignupPage : ContentPage
 	{
-		private List<User> users = new List<User>();
+		private static List<User> users = new List<User>();
 
 		public SignupPage()
 		{
 			InitializeComponent();
+
+			// Load existing user data when SignupPage is initialized
+			Task task = LoadUserDataAsync(); ;
 		}
 
 		private async void LoginButton_Clicked(object sender, EventArgs e)
@@ -55,6 +58,24 @@ namespace LoginMaui.Views.Auth
 
 			// Navigate to Login page
 			await Navigation.PushAsync(new LoginPage());
+		}
+
+		private async Task LoadUserDataAsync()
+		{
+			try
+			{
+				// Retrieve user data from Secure Storage asynchronously
+				string userDataJson = await SecureStorage.GetAsync("UserData") ?? "[]";
+
+				// Deserialize JSON to List<User>
+				users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userDataJson) ?? new List<User>();
+			}
+			catch (Exception ex)
+			{
+				// Handle exceptions (add your own error handling logic)
+				Console.WriteLine($"Error loading user data: {ex.Message}");
+				Debug.WriteLine($"Error loading user data: {ex.Message}");
+			}
 		}
 
 		private void SaveUserData(List<User> userList)
