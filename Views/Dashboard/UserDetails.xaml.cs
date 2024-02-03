@@ -10,25 +10,23 @@ public partial class UserDetails : ContentPage
 		InitializeComponent();
 		LoadUserData();
 	}
-	private void LoadUserData()
+	private async void LoadUserData()
 	{
-		// Retrieve user data from Secure Storage
-		string userDataJson = SecureStorage.GetAsync("UserData").Result ?? "[]";
+		try
+		{
+			// Retrieve user data from Secure Storage
+			string userDataJson = await SecureStorage.GetAsync("UserData") ?? "[]";
 
-		// Deserialize JSON to List<User>
-		List<SignupPage.User> userList = System.Text.Json.JsonSerializer.Deserialize<List<SignupPage.User>>(userDataJson)!;
+			// Deserialize JSON to List<User>
+			List<SignupPage.User> userList = System.Text.Json.JsonSerializer.Deserialize<List<SignupPage.User>>(userDataJson)!;
 
-		// Set the List<User> as the ItemsSource for the ListView
-		usersListView.ItemsSource = userList;
-	}
-
-	private void LogoutButton_Clicked(object sender, EventArgs e)
-	{
-		// crete a new NavigationPage with LoginPage as the root page
-		var loginPage = new LoginPage();
-		var navigationPage = new NavigationPage(loginPage);
-
-		// Set the new NavigationPage as the main page
-		Application.Current!.MainPage = navigationPage;
+			// Set the List<User> as the ItemsSource for the ListView
+			usersListView.ItemsSource = userList;
+		}
+		catch (Exception ex)
+		{
+			// Handle the exception, e.g., log it or display an error message
+			Console.WriteLine($"Error loading user data: {ex.Message}");
+		}
 	}
 }
