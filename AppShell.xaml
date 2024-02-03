@@ -21,5 +21,9 @@
 				ContentTemplate="{DataTemplate Main:MainPage}"
 				Route="MainPage" />
 	</FlyoutItem>
+	<MenuItem
+        Clicked="OnExitMenuItemClicked"
+        Text="Exit" />
+
 
 </Shell>
